@@ -68,3 +68,40 @@ class TaskManager:
         project.tasks.remove(task)
         return True
 
+    def list_tasks_by_project(self, project_id):
+        """
+        List all tasks that belong to a specific project.
+
+        Args:
+            project_id (int): The ID of the project whose tasks should be listed.
+
+        Returns:
+            list: A list of Task objects for the given project.
+                  Returns an empty list if the project is not found
+                  or if there are no tasks.
+        """
+        # Try to find the project with the given ID
+        project = next(
+            (p for p in self.storage.projects if p.id == project_id),
+            None
+        )
+
+        # Handle case when project does not exist
+        if not project:
+            print("Project not found.")
+            return []
+
+        # Handle case when project exists but has no tasks
+        if not project.tasks:
+            print("No tasks exist for this project.")
+            return []
+
+        # Print each task's details in a readable format
+        for task in project.tasks:
+            print(
+                f"[{task.id}] {task.title} | "
+                f"{task.status} | deadline={task.deadline}"
+            )
+
+        # Return the list of tasks for further use
+        return project.tasks
