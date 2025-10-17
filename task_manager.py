@@ -3,23 +3,69 @@ from in_memory_storage import storage
 from models import Task
 from project_manager import ProjectManager
 
+
 class TaskManager:
+    """
+    A manager class to handle all operations related to tasks within projects.
+
+    Attributes:
+        pm (ProjectManager): An instance of ProjectManager for project access.
+        storage (InMemoryStorage): Shared in-memory storage for projects and tasks.
+    """
+
     def __init__(self, project_manager=None):
-        # اگر ProjectManager داده نشده باشد، خودش می‌سازد
+        """
+        Initialize TaskManager with an optional ProjectManager instance.
+        If none is provided, a new ProjectManager is created.
+
+        Args:
+            project_manager (ProjectManager, optional): An existing ProjectManager instance.
+        """
         self.pm = project_manager or ProjectManager()
         self.storage = self.pm.storage
 
     def add_task(self, project_id, title, description, deadline=None):
+        """
+        Add a new task to a project.
+
+        Args:
+            project_id (int): ID of the project to add the task to.
+            title (str): Title of the task.
+            description (str): Description of the task.
+            deadline (str, optional): Optional deadline for the task.
+
+        Returns:
+            Task: The newly created Task object.
+
+        Raises:
+            ValueError: If the project is not found or validation fails.
+        """
         project = next((p for p in self.storage.projects if p.id == project_id), None)
         if not project:
             raise ValueError("پروژه یافت نشد.")
+
         validate_task(title, description, project.tasks)
         task_id = len(project.tasks) + 1
         task = Task(task_id, title, description, deadline=deadline)
         project.tasks.append(task)
+
         return task
 
     def change_status(self, project_id, task_id, new_status):
+        """
+        Change the status of a task within a project.
+
+        Args:
+            project_id (int): ID of the project containing the task.
+            task_id (int): ID of the task to update.
+            new_status (str): New status; must be 'todo', 'doing', or 'done'.
+
+        Returns:
+            Task: The updated Task object.
+
+        Raises:
+            ValueError: If the project or task is not found, or status is invalid.
+        """
         project = next((p for p in self.storage.projects if p.id == project_id), None)
         if not project:
             raise ValueError("پروژه یافت نشد.")
@@ -36,6 +82,22 @@ class TaskManager:
         return task
 
     def edit_task(self, project_id, task_id, new_title=None, new_description=None, new_deadline=None):
+        """
+        Edit the details of a task within a project.
+
+        Args:
+            project_id (int): ID of the project containing the task.
+            task_id (int): ID of the task to edit.
+            new_title (str, optional): New title for the task.
+            new_description (str, optional): New description.
+            new_deadline (str, optional): New deadline.
+
+        Returns:
+            Task: The updated Task object.
+
+        Raises:
+            ValueError: If project/task not found or validation fails.
+        """
         project = next((p for p in self.storage.projects if p.id == project_id), None)
         if not project:
             raise ValueError("پروژه یافت نشد.")
@@ -60,6 +122,19 @@ class TaskManager:
         return task
 
     def delete_task(self, project_id, task_id):
+        """
+        Delete a task from a project.
+
+        Args:
+            project_id (int): ID of the project.
+            task_id (int): ID of the task to delete.
+
+        Returns:
+            bool: True if task was successfully deleted.
+
+        Raises:
+            ValueError: If project or task is not found.
+        """
         project = next((p for p in self.storage.projects if p.id == project_id), None)
         if not project:
             raise ValueError("پروژه یافت نشد.")
@@ -70,7 +145,6 @@ class TaskManager:
 
         project.tasks.remove(task)
         return True
-
 
     def list_tasks_by_project(self, project_id):
         """
@@ -84,28 +158,23 @@ class TaskManager:
                   Returns an empty list if the project is not found
                   or if there are no tasks.
         """
-        # Try to find the project with the given ID
         project = next(
             (p for p in self.storage.projects if p.id == project_id),
             None
         )
 
-        # Handle case when project does not exist
         if not project:
-            print("Project not found.")
+            print("پروژه یافت نشد.")
             return []
 
-        # Handle case when project exists but has no tasks
         if not project.tasks:
-            print("No tasks exist for this project.")
+            print("تسکی برای این پروژه وجود ندارد.")
             return []
 
-        # Print each task's details in a readable format
         for task in project.tasks:
             print(
                 f"[{task.id}] {task.title} | "
                 f"{task.status} | deadline={task.deadline}"
             )
 
-        # Return the list of tasks for further use
         return project.tasks
