@@ -1,5 +1,5 @@
-from utils.validators import validate_project
-from data.in_memory_storage import storage
+from validators import validate_project
+from in_memory_storage import storage
 
 class ProjectManager:
     def __init__(self):
