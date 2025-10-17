@@ -1,5 +1,6 @@
 from validators import validate_project
 from in_memory_storage import storage
+from models import Project
 
 class ProjectManager:
     def __init__(self):
@@ -11,3 +12,15 @@ class ProjectManager:
         project = Project(project_id, name, description)
         self.storage.projects.append(project)
         return project
+
+    def edit_project(self, project_id, new_name=None, new_description=None):
+        project = next((p for p in self.storage.projects if p.id == project_id), None)
+        if not project:
+            raise ValueError("پروژه یافت نشد.")
+        if new_name:
+            validate_project(new_name, new_description or project.description, self.storage.projects)
+            project.name = new_name
+        if new_description:
+            project.description = new_description
+        return project
+
