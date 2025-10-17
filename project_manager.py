@@ -24,3 +24,10 @@ class ProjectManager:
             project.description = new_description
         return project
 
+    def delete_project(self, project_id):
+        project = next((p for p in self.storage.projects if p.id == project_id), None)
+        if not project:
+            raise ValueError("پروژه یافت نشد.")
+        self.storage.projects.remove(project)
+        return True
+
