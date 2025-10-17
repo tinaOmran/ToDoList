@@ -32,3 +32,26 @@ class TaskManager:
         task.status = new_status
         return task
 
+    def edit_task(self, project_id, task_id, new_title=None, new_description=None, new_deadline=None):
+        project = next((p for p in self.storage.projects if p.id == project_id), None)
+        if not project:
+            raise ValueError("پروژه یافت نشد.")
+
+        task = next((t for t in project.tasks if t.id == task_id), None)
+        if not task:
+            raise ValueError("تسک یافت نشد.")
+
+        if new_title:
+            if len(new_title.split()) > 30:
+                raise ValueError("عنوان تسک بیش از حد طولانی است.")
+            task.title = new_title
+
+        if new_description:
+            if len(new_description.split()) > 150:
+                raise ValueError("توضیح تسک بیش از حد طولانی است.")
+            task.description = new_description
+
+        if new_deadline:
+            task.deadline = new_deadline
+
+        return task
