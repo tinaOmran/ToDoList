@@ -1,10 +1,13 @@
 from validators import validate_task
 from in_memory_storage import storage
 from models import Task
+from project_manager import ProjectManager
 
 class TaskManager:
-    def __init__(self):
-        self.storage = storage
+    def __init__(self, project_manager=None):
+        # اگر ProjectManager داده نشده باشد، خودش می‌سازد
+        self.pm = project_manager or ProjectManager()
+        self.storage = self.pm.storage
 
     def add_task(self, project_id, title, description, deadline=None):
         project = next((p for p in self.storage.projects if p.id == project_id), None)
