@@ -55,3 +55,16 @@ class TaskManager:
             task.deadline = new_deadline
 
         return task
+
+    def delete_task(self, project_id, task_id):
+        project = next((p for p in self.storage.projects if p.id == project_id), None)
+        if not project:
+            raise ValueError("پروژه یافت نشد.")
+
+        task = next((t for t in project.tasks if t.id == task_id), None)
+        if not task:
+            raise ValueError("تسک یافت نشد.")
+
+        project.tasks.remove(task)
+        return True
+
