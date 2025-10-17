@@ -68,31 +68,7 @@ class TaskManager:
         project.tasks.remove(task)
         return True
 
-<<<<<<< HEAD
-    def list_projects(self):
-        """
-        Display all existing projects and return them as a list.
 
-        This method checks whether any projects are stored.
-        If no projects exist, it prints a message and returns an empty list.
-        Otherwise, it prints each project's ID, name, and description,
-        and returns the list of all projects.
-
-        Returns:
-            list: A list of all stored project objects. Returns an empty list if none exist.
-        """
-        # Check if there are any projects stored in memory
-        if not self.storage.projects:
-            print("No projects available.")
-            return []
-
-        # Iterate through all stored projects and print their details
-        for p in self.storage.projects:
-            print(f"[{p.id}] {p.name} - {p.description}")
-
-        # Return the list of all project objects
-        return self.storage.projects
-=======
     def list_tasks_by_project(self, project_id):
         """
         List all tasks that belong to a specific project.
@@ -130,4 +106,3 @@ class TaskManager:
 
         # Return the list of tasks for further use
         return project.tasks
->>>>>>> feature/list-project-tasks
