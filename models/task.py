@@ -1,29 +1,19 @@
-class Task:
-    """
-    Represents a task within a project.
+# models/task.py
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+import sqlalchemy as sa
+from db.base import Base
+from datetime import datetime
 
-    Attributes:
-        id (int): Unique identifier for the task.
-        title (str): Title of the task.
-        description (str): Description of the task.
-        status (str): Status of the task ('todo', 'doing', 'done'). Defaults to 'todo'.
-        deadline (str, optional): Optional deadline for the task.
-    """
+class Task(Base):
+    __tablename__ = "task"  # نام جدول با FK هماهنگ
 
-    def __init__(self, id, title, description, status="todo", deadline=None):
-        """
-        Initialize a Task instance.
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column()
+    description: Mapped[str] = mapped_column()
 
-        Args:
-            id (int): Unique ID of the task.
-            title (str): Title of the task.
-            description (str): Description of the task.
-            status (str, optional): Status of the task. Defaults to 'todo'.
-            deadline (str, optional): Deadline of the task. Defaults to None.
-        """
-        self.id = id
-        self.title = title
-        self.description = description
-        self.status = status
-        self.deadline = deadline
+    deadline: Mapped[datetime] = mapped_column(nullable=True)
+    project_id: Mapped[int] = mapped_column(sa.ForeignKey("project.id"))  # باید کوچک و همخوان با Project.__tablename__
 
+    project: Mapped["Project"] = relationship("Project", back_populates="tasks")
+
+    status: Mapped[str] = mapped_column(default="todo")

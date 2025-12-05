@@ -1,25 +1,13 @@
-class Project:
-    """
-    Represents a project containing tasks.
+# models/project.py
+from typing import List
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from db.base import Base
 
-    Attributes:
-        id (int): Unique identifier for the project.
-        name (str): Name of the project.
-        description (str): Optional description of the project.
-        tasks (list): List of Task objects associated with this project.
-    """
+class Project(Base):
+    __tablename__ = "project"  # با FK در Task هماهنگ
 
-    def __init__(self, project_id, name, description=""):
-        """
-        Initialize a Project instance.
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    description: Mapped[str] = mapped_column(nullable=True)
 
-        Args:
-            project_id (int): Unique ID of the project.
-            name (str): Name of the project.
-            description (str, optional): Description of the project. Defaults to empty string.
-        """
-        self.id = project_id
-        self.name = name
-        self.description = description
-        self.tasks = []  # List to hold tasks associated with this project
-
+    tasks: Mapped[List["Task"]] = relationship("Task", back_populates="project")
