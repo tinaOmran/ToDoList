@@ -1,7 +1,7 @@
-from validators import validate_task
+from services.validators import validate_task
 from in_memory_storage import storage
-from models import Task
-from project_manager import ProjectManager
+from models.models import Task
+from services.project_manager import ProjectManager
 
 
 class TaskManager:

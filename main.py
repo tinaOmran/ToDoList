@@ -1,11 +1,11 @@
 # main.py
-from project_manager import ProjectManager
-from task_manager import TaskManager
-from validators import validate_project, validate_task
+from services.project_manager import ProjectManager
+from services.task_manager import TaskManager
+from services.validators import validate_project, validate_task
 import sys
 
 def print_menu():
-    print("\n=== 🗂 منوی اصلی ToDoList ===")
+    print("\n=== منوی اصلی ToDoList ===")
     print("1. ایجاد پروژه جدید")
     print("2. ویرایش پروژه")
     print("3. حذف پروژه")
