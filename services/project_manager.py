@@ -1,6 +1,6 @@
 from services.validators import validate_project
 from in_memory_storage import storage
-from models.models import Project
+from models.project import Project
 
 
 class ProjectManager:

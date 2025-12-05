@@ -1,6 +1,6 @@
 from services.validators import validate_task
 from in_memory_storage import storage
-from models.models import Task
+from models.task import Task
 from services.project_manager import ProjectManager
 
 
