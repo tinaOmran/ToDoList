@@ -1,6 +1,7 @@
 """Database session management for SQLAlchemy."""
 
 import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from dotenv import load_dotenv
@@ -8,18 +9,10 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
-
-DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL:
-    raise ValueError("No DATABASE_URL set for the application. Add DATABASE_URL to your .env file.")
+    raise ValueError("No DATABASE_URL set for the application")
 
 # Create engine with basic configuration
 engine = create_engine(
@@ -36,5 +29,7 @@ SessionLocal = sessionmaker(
 )
 
 def get_session() -> Session:
-    """Return a new database session."""
+    """
+    Create and return a new SQLAlchemy session.
+    """
     return SessionLocal()

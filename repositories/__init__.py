@@ -2,8 +2,8 @@
 Repository layer for database operations.
 """
 
-from .project_repository import ProjectRepository
-from .task_repository import TaskRepository
+from repositories.project_repository import ProjectRepository
+from repositories.task_repository import TaskRepository
 
 __all__ = [
     "ProjectRepository",
