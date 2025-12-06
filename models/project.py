@@ -11,3 +11,6 @@ class Project(Base):
     description: Mapped[str] = mapped_column(nullable=True)
 
     tasks: Mapped[List["Task"]] = relationship("Task", back_populates="project")
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
