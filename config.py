@@ -22,8 +22,8 @@ else:
 @dataclass(frozen=True)
 class Config:
     """Immutable configuration values for the ToDoList."""
-    MAX_NUMBER_OF_PROJECT: int = int(os.getenv("MAX_NUMBER_OF_PROJECT", "50"))
-    MAX_NUMBER_OF_TASK: int = int(os.getenv("MAX_NUMBER_OF_TASK", "500"))
+    MAX_NUMBER_OF_PROJECT: int = int(os.getenv("MAX_NUMBER_OF_PROJECT", "7"))
+    MAX_NUMBER_OF_TASK: int = int(os.getenv("MAX_NUMBER_OF_TASK", "50"))
     DEFAULT_TASK_STATUS: str = os.getenv("DEFAULT_TASK_STATUS", "todo")
 
 
