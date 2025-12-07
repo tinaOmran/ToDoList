@@ -1,7 +1,5 @@
 """Command-line interface for the To-Do List application.
 
-WARNING: CLI interface is deprecated and will be removed in the next release.
-Please use the FastAPI HTTP interface instead.
 """
 
 from db.session import get_session
@@ -16,21 +14,16 @@ from services.task_service import TaskService
 
 class TodoCLI:
     """CLI class for Todo List Application.
-
-    DEPRECATED: This CLI will be removed in the next release.
-    Use the FastAPI HTTP interface instead.
     """
 
     def __init__(self, project_service: ProjectService, task_service: TaskService):
         self.project_service = project_service
         self.task_service = task_service
 
-        print("\n⚠️  WARNING: CLI interface is deprecated and will be removed in the next release.")
-        print("   Please use the FastAPI HTTP interface instead.\n")
 
     def print_menu(self):
         """Display the main menu options."""
-        print("\n📋 --- To-Do List Menu ---")
+        print("\n --- To-Do List Menu ---")
         print("1. List all projects")
         print("2. Create a new project")
         print("3. Edit a project")
@@ -47,7 +40,7 @@ class TodoCLI:
 
         projects = self.project_service.list_projects()
         if not projects:
-            print("⚠️  No projects found.")
+            print(" No projects found.")
         else:
             for p in projects:
                 print(f"[{p.id}] {p.name} - {p.description or '-'}")
@@ -58,7 +51,7 @@ class TodoCLI:
         name = input("Project name: ")
         desc = input("Description (optional): ")
         project = self.project_service.create_project(name, desc)
-        print(f"✅ Project '{project.name}' created successfully!")
+        print(f"Project '{project.name}' created successfully!")
 
     def handle_edit_project(self):
         """Handle editing an existing project."""
@@ -67,7 +60,7 @@ class TodoCLI:
         name = input("New name (leave blank to keep current): ")
         desc = input("New description (leave blank to keep current): ")
         project = self.project_service.update_project(pid, name or None, desc or None)
-        print(f"✅ Project {project.id} updated successfully!")
+        print(f" Project {project.id} updated successfully!")
 
     def handle_delete_project(self):
         """Handle deleting a project."""
@@ -83,7 +76,7 @@ class TodoCLI:
         tasks = self.task_service.list_tasks(pid)
 
         if not tasks:
-            print("⚠️  No tasks in this project.")
+            print(" No tasks in this project.")
 
         else:
             for t in tasks:
@@ -100,7 +93,7 @@ class TodoCLI:
         status = input("Status (todo/doing/done, optional): ")
         deadline = input("Deadline (YYYY-MM-DD, optional): ")
         task = self.task_service.create_task(pid, title, desc, status or None, deadline or None)
-        print(f"✅ Task '{task.title}' added successfully!")
+        print(f" Task '{task.title}' added successfully!")
 
     def handle_edit_task(self):
         """Handle editing an existing task."""
@@ -112,7 +105,7 @@ class TodoCLI:
         status = input("New status (todo/doing/done, optional): ")
         deadline = input("New deadline (YYYY-MM-DD, optional): ")
         task = self.task_service.update_task(pid, tid, title or None, desc or None, status or None, deadline or None)
-        print(f"✅ Task {task.id} updated successfully!")
+        print(f" Task {task.id} updated successfully!")
 
     def handle_change_task_status(self):
         """Handle changing the status of an existing task."""
@@ -121,7 +114,7 @@ class TodoCLI:
         tid = int(input("Enter task ID: "))
         status = input("Enter new status (todo/doing/done): ")
         task = self.task_service.change_task_status(pid, tid, status)
-        print(f"🔄 Task {task.id} status changed to '{task.status}'.")
+        print(f" Task {task.id} status changed to '{task.status}'.")
 
     def handle_delete_task(self):
         """Handle deleting a task."""
@@ -158,18 +151,18 @@ class TodoCLI:
                     elif choice == "9":
                         self.handle_delete_task()
                     elif choice == "0":
-                        print("👋 Goodbye!")
+                        print("Goodbye!")
                         break
                     else:
-                        print("❌ Invalid choice. Please try again.")
+                        print("Your choise is Invalid. Please try again.")
 
                 except (ValidationError, ProjectNotFoundError, TaskNotFoundError) as e:
-                    print(f"❌ Error: {e}")
+                    print(f" Error: {e}")
                 except Exception as e:
-                    print(f"❌ Unexpected error: {e}")
+                    print(f" Unexpected error: {e}")
 
         except KeyboardInterrupt:
-            print("\n👋 Application stopped by user")
+            print("\n Application stopped by user")
 
 
 def run_cli() -> None:
