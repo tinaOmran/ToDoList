@@ -4,9 +4,9 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from todo.db.session import get_session
-from todo.services.project_service import ProjectService
-from todo.exceptions.service_exceptions import (
+from db.session import get_session
+from services.project_service import ProjectService
+from exceptions.service_exceptions import (
     ProjectNotFoundError,
     ProjectNameExistsError,
     ProjectLimitExceededError

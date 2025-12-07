@@ -4,15 +4,15 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status, Path
 from sqlalchemy.orm import Session
 
-from todo.db.session import get_session
-from todo.services.task_service import TaskService
-from todo.exceptions.service_exceptions import (
+from db.session import get_session
+from services.task_service import TaskService
+from exceptions.service_exceptions import (
     TaskNotFoundError,
     ProjectNotFoundError,
     TaskLimitExceededError,
     InvalidDeadlineError
 )
-from todo.exceptions.base import ValidationError
+from exceptions.base import ValidationError
 
 from ..controller_schemas.requests import (
     TaskCreateRequest,
