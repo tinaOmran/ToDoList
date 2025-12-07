@@ -1,5 +1,6 @@
 """Command-line interface for the To-Do List application.
-
+    WARNING: The CLI interface is deprecated and will be removed in the next version.
+    Please migrate to the FastAPI-based HTTP API.
 """
 
 from db.session import get_session
@@ -20,6 +21,8 @@ class TodoCLI:
         self.project_service = project_service
         self.task_service = task_service
 
+        print("\n⚠️  WARNING: The CLI interface is deprecated and will be removed in the next version.")
+        print("   Please migrate to the FastAPI-based HTTP API.\n")
 
     def print_menu(self):
         """Display the main menu options."""
