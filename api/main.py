@@ -49,7 +49,7 @@ app = create_application()
 
 
 @app.get("/", tags=["Root"])
-async def root():
+def root():
     """
     Root endpoint providing API information.
 
@@ -72,7 +72,7 @@ async def root():
 
 
 @app.get("/api", tags=["API Info"])
-async def api_info():
+def api_info():
     """
     API version and configuration information.
 
